@@ -1,4 +1,17 @@
+import { createBrowserRouter } from "react-router-dom";
 import "./App.css";
+import { Home } from "./routes/Home";
+
+export const AllRoutes = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "/home",
+    element: <Home />,
+  },
+]);
 
 function App() {
   return (
@@ -17,6 +30,9 @@ function App() {
           rounded-md
           hover:bg-white hover:text-gray-700
           text-white font-semibold"
+            onClick={() => {
+              window.location.href = "/home";
+            }}
           >
             Explore
           </button>
