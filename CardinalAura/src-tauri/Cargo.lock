@@ -3,6 +3,16 @@
 version = 3
 
 [[package]]
+name = "CardinalAura"
+version = "0.0.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "tauri",
+ "tauri-build",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.21.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -223,16 +233,6 @@ dependencies = [
  "glib-sys",
  "libc",
  "system-deps 6.1.2",
-]
-
-[[package]]
-name = "cardianl-aura"
-version = "0.0.0"
-dependencies = [
- "serde",
- "serde_json",
- "tauri",
- "tauri-build",
 ]
 
 [[package]]

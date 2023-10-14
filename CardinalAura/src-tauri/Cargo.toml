@@ -1,5 +1,5 @@
 [package]
-name = "cardianl-aura"
+name = "CardinalAura"
 version = "0.0.0"
 description = "A Tauri App"
 authors = ["you"]
