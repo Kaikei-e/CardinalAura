@@ -11,7 +11,13 @@ function App() {
       </div>
       <div className=" m-10 flex flex-row justify-end">
         <div className="w-3/12">
-          <button className=" w-11/12 p-2 border-2 border-white rounded-md text-white font-semibold">
+          <button
+            className="w-11/12 p-2
+          border-2 border-white
+          rounded-md
+          hover:bg-white hover:text-gray-700
+          text-white font-semibold"
+          >
             Explore
           </button>
         </div>
