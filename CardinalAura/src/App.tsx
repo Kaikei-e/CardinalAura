@@ -31,7 +31,7 @@ function App() {
           hover:bg-white hover:text-gray-700
           text-white font-semibold"
             onClick={() => {
-              window.location.href = "/home";
+              AllRoutes.navigate("/home");
             }}
           >
             Explore
