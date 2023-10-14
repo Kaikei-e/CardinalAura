@@ -1,7 +1,5 @@
 :root {
   font-family: "Noto Serif JP", serif;
-  line-height: 24px;
-  font-weight: 400;
 
   color: #0f0f0f;
 
@@ -9,22 +7,23 @@
   background: linear-gradient(
     to right,
     #fecaca,
-    #f87171
+    #dc2626
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .container {
-  margin: 0;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+
   padding-top: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
-}
-
-h1 {
-  text-align: center;
-  font-size: xx-large;
 }
 
 .logo.vite:hover {
