@@ -3,11 +3,12 @@ import "./App.css";
 function App() {
   return (
     <div className="container">
-      <div className="bg-blue-700 text-blue-800">
-        <h1>
-          Cardinal Aura
-        </h1>
-      </div>
+      <h1 className="m-0 h-screen pt-10vh flex justify-center text-center font-medium">
+        Cardinal Aura
+      </h1>
+      <p className="mt-2 font-light">
+        Explore: by curiosity.
+      </p>
     </div>
   );
 }
