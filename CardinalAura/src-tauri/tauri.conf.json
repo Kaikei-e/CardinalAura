@@ -36,10 +36,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": true,
-        "title": "CardinalAura",
-        "width": 800,
-        "height": 600
+        "resizable": false,
+        "title": "Cardinal Aura",
+        "width": 1400,
+        "height": 1000
       }
     ]
   }
