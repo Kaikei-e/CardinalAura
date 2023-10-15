@@ -15,7 +15,7 @@ export const AllRoutes = createBrowserRouter([
 
 function App() {
   return (
-    <div className="container h-screen justify-between flex flex-col">
+    <div className="base h-screen justify-between flex flex-col">
       <div className="justify-center">
         <h1 className="h1-style m-0 pt-10vh flex justify-center text-center">
           Cardinal Aura

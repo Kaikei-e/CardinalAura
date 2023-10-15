@@ -1,21 +1,16 @@
-:root {
+/* :root {
+
+} */
+
+.base {
   font-family: "Noto Serif JP", serif;
-  width: 100vw;
   height: 100vh;
+  margin: 0;
 
   color: #0f0f0f;
   background: #fecaca; /* fallback for old browsers */
   background: linear-gradient(to right, #fecaca, #dc2626);
-}
-
-.container {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-
+  
   padding-top: 10vh;
   display: flex;
   flex-direction: column;
@@ -27,12 +22,4 @@
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 600;
-}
-
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
 }
