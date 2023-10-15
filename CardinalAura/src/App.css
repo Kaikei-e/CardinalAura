@@ -1,14 +1,14 @@
-/* :root {
-
-} */
+* {
+  box-sizing: border-box;
+}
 
 .base {
   font-family: "Noto Serif JP", serif;
-  height: 100vh;
+  height: calc(100vh - 16px);
   margin: 0;
 
   color: #0f0f0f;
-  background: #fecaca; /* fallback for old browsers */
+  background: #fecaca;
   background: linear-gradient(to right, #fecaca, #dc2626);
 
   display: flex;
@@ -21,4 +21,6 @@
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 600;
+  margin: 0;
+  padding: 0;
 }
