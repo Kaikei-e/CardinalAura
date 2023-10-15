@@ -1,8 +1,11 @@
 :root {
   font-family: "Noto Serif JP", serif;
+  width: 100vw;
+  height: 100vh;
 
   color: #0f0f0f;
-  background-color: lightsalmon;
+  background: #fecaca; /* fallback for old browsers */
+  background: linear-gradient(to right, #fecaca, #dc2626);
 }
 
 .container {
@@ -18,6 +21,12 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
+}
+
+.h1-style {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 600;
 }
 
 .logo.vite:hover {

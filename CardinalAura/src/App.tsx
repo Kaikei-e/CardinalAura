@@ -13,13 +13,11 @@ export const AllRoutes = createBrowserRouter([
   },
 ]);
 
-
-
 function App() {
   return (
-    <div className="container justify-between flex flex-col">
-      <div className="justify-center ">
-        <h1 className=" text-3xl font-semibold m-0 pt-10vh flex justify-center text-center">
+    <div className="container h-screen justify-between flex flex-col">
+      <div className="justify-center">
+        <h1 className="h1-style m-0 pt-10vh flex justify-center text-center">
           Cardinal Aura
         </h1>
         <p className="mt-2 font-semibold">Explore: by curiosity.</p>
