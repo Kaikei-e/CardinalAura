@@ -2,10 +2,19 @@ export const Home = () => {
   return (
     <div className="h-screen p-8 text-gray-700 bg-red-300">
       <h1 className="h1-style pt-3">Home</h1>
-      <p className="font-semibold text-gray-700">Welcome to Cardinal Aura</p>
+      <p className="font-semibold text-xl text-gray-700">Welcome to Cardinal Aura. Curiosity guides you.</p>
       <div className="h-11/12 w-full p-8 grid grid-cols-3 gap-4 ">
-        <div className="w-full h-full bg-yellow-100">
-          <p className="text-2xl">Welcome to Cardinal Aura!</p>
+        <div className="w-full h-full bg-yellow-100 rounded-md flex-col justify-center text-center">
+          <p className="text-2xl text-center underline">Insight</p>
+          <p className="mt-2">Insight suggests what you need from accumulated RSS feeds.</p>
+        </div>
+        <div className="w-full h-full bg-yellow-100 rounded-md flex-col justify-center text-center">
+          <p className="text-2xl text-center underline">Storage</p>
+          <p className="mt-2">Storage helps you effortlessly search through the feeds you've gathered, ensuring you get the most from what you've collected.</p>
+        </div>
+        <div className="w-full h-full bg-yellow-100 rounded-md flex-col justify-center text-center">
+          <p className="text-2xl text-center underline">Stream</p>
+          <p className="mt-2">Stream displays the RSS feeds you've acquired, showcasing them in the latest order.</p>
         </div>
       </div>
     </div>
