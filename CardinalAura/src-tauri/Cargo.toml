@@ -1,8 +1,8 @@
 [package]
 name = "cardinal_aura"
 version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "A Simple RSS Feed Reader App"
+authors = ["Kaikei Ezaki"]
 license = ""
 repository = ""
 edition = "2021"
@@ -14,9 +14,9 @@ tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
 tauri = { version = "1.5", features = ["shell-open"] }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-sqlx = { version = "0.7", features = [ "runtime-tokio" ] }
+serde_json = "1.0.107"
+serde = { version = "1.0.189", features = ["derive"] }
+sqlx = { version = "0.7", features = [ "runtime-tokio", "sqlite", "uuid", "time", "json"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
