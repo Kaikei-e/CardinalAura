@@ -1,6 +1,7 @@
 import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import { DescriptionModal } from "../components/elements/DescriptionModal";
 import { useState } from "react";
+import { Stream } from "../components/services/Stream";
 
 export const Home = () => {
   const [isStreamModalOpen, setIsStreamModalOpen] = useState(false);
@@ -63,6 +64,7 @@ export const Home = () => {
               <QuestionMarkCircleIcon className="h-6 w-6 text-blue-400" />
             </button>
           </div>
+          <Stream />
           {isStreamModalOpen && (
             <DescriptionModal
               description={streamDescription}
