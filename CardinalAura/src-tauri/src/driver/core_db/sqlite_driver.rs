@@ -17,3 +17,11 @@ pub async fn initialize_connection() -> Result<SqlitePool, sqlx::Error>{
 
     Ok(pool)
 }
+
+pub async fn migrate_db(pool: &SqlitePool) -> Result<(), sqlx::Error> {
+  sqlx::migrate!("./src/db/initial_setup")
+    .run(pool)
+    .await?;
+
+    Ok(())
+}
