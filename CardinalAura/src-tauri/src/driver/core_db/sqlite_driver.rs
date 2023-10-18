@@ -1,27 +1,26 @@
 use sqlx::{
-  sqlite::{SqliteConnectOptions, SqliteJournalMode, SqlitePoolOptions, SqliteSynchronous},
-  SqlitePool,
+    sqlite::{SqliteConnectOptions, SqliteJournalMode, SqlitePoolOptions, SqliteSynchronous},
+    SqlitePool,
 };
+use std::str::FromStr;
 
-pub async fn initialize_connection() -> Result<SqlitePool, sqlx::Error>{
+pub async fn initialize_connection(db_url: String) -> Result<SqlitePool, sqlx::Error> {
+    let pool = SqliteConnectOptions::from_str(&db_url)?
+        .create_if_missing(true)
+        .filename("core_db.sqlite")
+        .journal_mode(SqliteJournalMode::Wal)
+        .synchronous(SqliteSynchronous::Normal);
+
     let pool = SqlitePoolOptions::new()
         .max_connections(5)
-        .connect_with(
-        SqliteConnectOptions::new()
-            .filename("core_db.sqlite")
-            .journal_mode(SqliteJournalMode::Wal)
-            .synchronous(SqliteSynchronous::Normal),
-        )
-        .await
-        .unwrap();
+        .connect_with(pool)
+        .await?;
 
     Ok(pool)
 }
 
 pub async fn migrate_db(pool: &SqlitePool) -> Result<(), sqlx::Error> {
-  sqlx::migrate!("./src/db/initial_setup")
-    .run(pool)
-    .await?;
+    sqlx::migrate!("./src/db/initial_setup").run(pool).await?;
 
     Ok(())
 }
