@@ -3,3 +3,6 @@
 /target/
 
 /.env
+/src/db/data/core_db.sqlite
+/src/db/data/core_db.sqlite-shm
+/src/db/data/core_db.sqlite-wal
