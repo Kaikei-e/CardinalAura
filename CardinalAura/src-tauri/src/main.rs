@@ -28,17 +28,19 @@ fn main() {
 
     println!("Database file: {:?}", database_file);
 
-    let is_db_exist = std::fs::metadata(database_file.clone()).is_ok();
+    let is_db_exist = std::fs::metadata(database_dir.clone()).is_ok();
     if !is_db_exist {
         std::fs::create_dir(database_dir).expect("failed to create database directory");
     }
 
     let database_url = format!("sqlite://{}", database_file.to_str().unwrap());
 
-    let conn_pool = block_on(sqlite_driver::initialize_connection(database_url)).unwrap();
+    let conn_pool = block_on(sqlite_driver::initialize_connection(
+        database_file.to_str().unwrap().to_string(),
+    )).unwrap();
 
     if !is_db_exist {
-        block_on(driver::core_db::sqlite_driver::migrate_db(&conn_pool))
+        block_on(sqlite_driver::migrate_db(&conn_pool))
             .expect("failed to migrate db and initialization was failed.");
     }
 

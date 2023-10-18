@@ -5,9 +5,11 @@ use sqlx::{
 use std::str::FromStr;
 
 pub async fn initialize_connection(db_url: String) -> Result<SqlitePool, sqlx::Error> {
+    println!("Database file: {:?}", db_url);
+
     let pool = SqliteConnectOptions::from_str(&db_url)?
         .create_if_missing(true)
-        .filename("core_db.sqlite")
+        .filename(db_url)
         .journal_mode(SqliteJournalMode::Wal)
         .synchronous(SqliteSynchronous::Normal);
 
