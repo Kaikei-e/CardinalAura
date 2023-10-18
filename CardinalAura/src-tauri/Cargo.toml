@@ -20,6 +20,7 @@ serde = { version = "1.0.189", features = ["derive"] }
 sqlx = { version = "0.7", features = [ "runtime-tokio", "sqlite", "uuid", "time", "json"] }
 anyhow = "1.0"
 futures = "0.3"
+dotenv = "0.15.0"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
