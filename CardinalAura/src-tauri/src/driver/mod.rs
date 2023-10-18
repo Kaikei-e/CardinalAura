@@ -1,1 +1,1 @@
-pub(crate) mod core_db;
+pub mod core_db;
