@@ -33,13 +33,14 @@ fn main() {
         std::fs::create_dir(database_dir).expect("failed to create database directory");
     }
 
-    let database_url = format!("sqlite://{}", database_file.to_str().unwrap());
+    // let database_url = format!("sqlite://{}", database_file.to_str().unwrap());
 
     let conn_pool = block_on(sqlite_driver::initialize_connection(
         database_file.to_str().unwrap().to_string(),
     )).unwrap();
 
-    if !is_db_exist {
+    println!("{:?}", std::fs::metadata(database_file.clone()).is_ok());
+    if std::fs::metadata(database_file).is_ok() {
         block_on(sqlite_driver::migrate_db(&conn_pool))
             .expect("failed to migrate db and initialization was failed.");
     }
