@@ -16,9 +16,7 @@ fn main() {
 
     const DATABASE_DIR: &str = "data";
     const DATABASE_FILE: &str = "core_db.sqlite";
-    // let base_dir = directories::UserDirs::new()
-    //     .map(|dirs| dirs.home_dir().to_path_buf())
-    //     .unwrap_or_else(|| std::env::current_dir().expect("Can't access the current directory"));
+
     let base_dir = std::env::current_dir().expect("Can't access the current directory");
 
     let app_dir = base_dir.join("src").join("db");
@@ -37,9 +35,9 @@ fn main() {
 
     let conn_pool = block_on(sqlite_driver::initialize_connection(
         database_file.to_str().unwrap().to_string(),
-    )).unwrap();
+    ))
+    .unwrap();
 
-    println!("{:?}", std::fs::metadata(database_file.clone()).is_ok());
     if std::fs::metadata(database_file).is_ok() {
         block_on(sqlite_driver::migrate_db(&conn_pool))
             .expect("failed to migrate db and initialization was failed.");
