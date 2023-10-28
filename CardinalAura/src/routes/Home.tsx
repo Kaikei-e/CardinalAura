@@ -2,6 +2,7 @@ import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import { DescriptionModal } from "../components/elements/DescriptionModal";
 import { useState } from "react";
 import { Stream } from "../components/services/Stream";
+import { Register } from "../components/services/Register";
 
 export const Home = () => {
   const [isStreamModalOpen, setIsStreamModalOpen] = useState(false);
@@ -75,7 +76,10 @@ export const Home = () => {
             />
           )}
         </div>
-        <div className="col-span-2 bg-yellow-100 rounded-md ...">Something</div>
+        <div className="col-span-2 bg-yellow-100 rounded-md ...">
+          <p>Something</p>
+          <Register />
+        </div>
       </div>
     </div>
   );
