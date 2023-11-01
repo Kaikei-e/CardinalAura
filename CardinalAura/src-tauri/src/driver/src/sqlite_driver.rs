@@ -22,7 +22,10 @@ pub async fn initialize_connection(db_url: String) -> Result<SqlitePool, sqlx::E
 }
 
 pub async fn migrate_db(pool: &SqlitePool) -> Result<(), sqlx::Error> {
-    sqlx::migrate!("./src/db/initial_setup").run(pool).await?;
+    sqlx::migrate!("./db/initial_setup/")
+        .run(pool)
+        .await
+        .expect("failed to migrate db");
 
     Ok(())
 }

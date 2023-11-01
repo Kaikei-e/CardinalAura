@@ -3,6 +3,8 @@
 /target/
 
 /.env
-/src/db/data/core_db.sqlite
-/src/db/data/core_db.sqlite-shm
-/src/db/data/core_db.sqlite-wal
+/src/driver/db/data/core_db.sqlite
+/src/driver/db/data/core_db.sqlite-shm
+/src/driver/db/data/core_db.sqlite-wal
+/src/domain/target/
+/src/driver/target/
