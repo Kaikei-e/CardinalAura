@@ -2,14 +2,22 @@ import { ReactNode } from "react";
 
 type buttonProps = {
   inputType: string;
+  handleSubmit?: (
+    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
+  ) => void;
   children: ReactNode;
 };
 
-export const SubmitButton = ({ inputType, children }: buttonProps) => {
+export const SubmitButton = ({
+  inputType,
+  children,
+  handleSubmit,
+}: buttonProps) => {
   return (
     <div className=" h-14 justify-center bg-gray-50 rounded-md px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
       <button
         type={inputType === "button" ? "button" : "submit"}
+        onClick={handleSubmit}
         className="
       mt-3 inline-flex align-middle
       w-full justify-center rounded-md
