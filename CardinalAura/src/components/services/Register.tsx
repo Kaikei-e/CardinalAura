@@ -30,9 +30,7 @@ export const Register = () => {
           onChange={handleURLInput}
         />
         <div className=" w-2/12 justify-center">
-          <SubmitButton inputType="submit">
-            Submit
-          </SubmitButton>
+          <SubmitButton inputType="submit">Submit</SubmitButton>
         </div>
       </form>
     </div>
