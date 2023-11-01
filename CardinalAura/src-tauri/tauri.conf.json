@@ -36,7 +36,7 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": false,
+        "resizable": true,
         "title": "Cardinal Aura",
         "width": 1600,
         "height": 1200
