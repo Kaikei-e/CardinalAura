@@ -274,6 +274,7 @@ dependencies = [
  "sqlx",
  "tauri",
  "tauri-build",
+ "uuid",
 ]
 
 [[package]]
