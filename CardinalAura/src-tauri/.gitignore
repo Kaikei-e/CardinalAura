@@ -7,4 +7,4 @@
 /src/driver/db/data/core_db.sqlite-shm
 /src/driver/db/data/core_db.sqlite-wal
 /src/domain/target/
-/src/driver/target/
+/src/driver_old/target/

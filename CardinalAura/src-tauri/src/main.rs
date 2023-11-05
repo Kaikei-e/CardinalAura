@@ -1,7 +1,5 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-
-use driver::sqlite_driver;
 use tauri::Manager;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -10,10 +8,13 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
+
+use driver::sqlite_driver;
+
 fn main() {
     use tauri::async_runtime::block_on;
 
-    const DATABASE_DIR: &str = "driver/db/data";
+    const DATABASE_DIR: &str = "driver_old/db/data";
     const DATABASE_FILE: &str = "core_db.sqlite";
 
     let base_dir = std::env::current_dir().expect("Can't access the current directory");

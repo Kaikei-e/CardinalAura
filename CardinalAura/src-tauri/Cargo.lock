@@ -263,9 +263,11 @@ dependencies = [
 
 [[package]]
 name = "cardinal_aura"
-version = "0.0.0"
+version = "0.0.1"
 dependencies = [
  "anyhow",
+ "command",
+ "controller",
  "directories",
  "domain",
  "dotenv",
@@ -276,6 +278,7 @@ dependencies = [
  "sqlx",
  "tauri",
  "tauri-build",
+ "usecase",
  "uuid",
 ]
 
@@ -400,10 +403,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "command"
+version = "0.1.0"
+dependencies = [
+ "tauri",
+]
+
+[[package]]
 name = "const-oid"
 version = "0.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28c122c3980598d243d63d9a704629a2d748d101f278052ff068be5a4423ab6f"
+
+[[package]]
+name = "controller"
+version = "0.1.0"
 
 [[package]]
 name = "convert_case"
@@ -709,7 +723,13 @@ checksum = "1aaf95b3e5c8f23aa320147307562d361db0ae0d51242340f558153b4eb2439b"
 name = "driver"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
+ "directories",
  "domain",
+ "dotenv",
+ "futures",
+ "serde",
+ "serde_json",
  "sqlx",
  "uuid",
 ]
@@ -3882,6 +3902,10 @@ dependencies = [
  "percent-encoding",
  "serde",
 ]
+
+[[package]]
+name = "usecase"
+version = "0.1.0"
 
 [[package]]
 name = "utf-8"

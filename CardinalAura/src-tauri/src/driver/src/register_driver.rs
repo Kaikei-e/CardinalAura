@@ -1,6 +1,6 @@
-use sqlx::SqlitePool;
-use sqlx::types::uuid;
 use domain::rss_feed_site::RssFeedSite;
+use sqlx::types::uuid;
+use sqlx::SqlitePool;
 
 #[derive(sqlx::FromRow)]
 struct RssFeedSiteDto {
