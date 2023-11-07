@@ -1,3 +1,6 @@
+use serde::Serialize;
+
+#[derive(Serialize, Debug, Clone)]
 pub struct RssFeedSite {
     pub xml_version: i64,
     pub rss_version: i64,

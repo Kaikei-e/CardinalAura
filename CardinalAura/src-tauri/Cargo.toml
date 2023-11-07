@@ -14,6 +14,8 @@ members = [
   "src/controller",
   "src/usecase",
   "src/command",
+  "src/gateway",
+  "src/port",
 ]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -37,6 +39,8 @@ driver = { path = "src/driver", version = "0.1.0" }
 controller = { path = "src/controller", version = "0.1.0" }
 usecase = { path = "src/usecase", version = "0.1.0" }
 command = { path = "src/command", version = "0.1.0"     }
+gateway = { path = "src/gateway", version = "0.1.0" }
+port = { path = "src/port", version = "0.1.0" }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
