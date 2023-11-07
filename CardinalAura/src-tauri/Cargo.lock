@@ -3927,6 +3927,9 @@ dependencies = [
 [[package]]
 name = "usecase"
 version = "0.1.0"
+dependencies = [
+ "domain",
+]
 
 [[package]]
 name = "utf-8"
