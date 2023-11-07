@@ -14,7 +14,7 @@ use driver::sqlite_driver;
 fn main() {
     use tauri::async_runtime::block_on;
 
-    const DATABASE_DIR: &str = "driver_old/db/data";
+    const DATABASE_DIR: &str = "driver/db/data";
     const DATABASE_FILE: &str = "core_db.sqlite";
 
     let base_dir = std::env::current_dir().expect("Can't access the current directory");
