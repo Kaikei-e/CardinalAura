@@ -15,9 +15,6 @@ mod tests {
 
         let result = register_single_url(url.clone());
 
-        let links = vec!["http://example.com/".to_string()];
-
-
         let expected = RssFeedSite {
             url: url.to_string(),
             title: "lorem".to_string(),
