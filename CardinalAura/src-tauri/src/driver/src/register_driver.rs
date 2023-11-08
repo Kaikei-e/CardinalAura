@@ -30,15 +30,11 @@ pub async fn register_rss_feed_site(
     let uid = uuid::Uuid::new_v4();
     let row_affected = sqlx::query(
         "INSERT INTO follow_lists
-         (uuid, xml_version, rss_version,
-          url, title, description,
-           link, links, item_description,
-            language)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+         (uuid, url, title, description,
+           link, items, item_description, language)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     )
     .bind(uid)
-    .bind(rss_feed_url.xml_version)
-    .bind(rss_feed_url.rss_version)
     .bind(rss_feed_url.url)
     .bind(rss_feed_url.title)
     .bind(rss_feed_url.description)
