@@ -10,3 +10,5 @@ anyhow = { version = "1.0.75", features = [] }
 
 # own dependencies
 port = { path = "../port" }
+usecase = { path = "../usecase" }
+

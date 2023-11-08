@@ -1,1 +1,1 @@
-mod register_url_usecase;
+pub mod register_url_usecase;

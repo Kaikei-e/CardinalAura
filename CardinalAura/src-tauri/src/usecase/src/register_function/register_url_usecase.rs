@@ -1,7 +1,15 @@
 use domain::rss_feed_site::RssFeedSite;
 
-pub fn register_single_url(url: String) -> RssFeedSite {
-    todo!("not yet implemented")
+trait IRegisterSingleUrlUseCase {
+    fn execute(&self, url: String) -> RssFeedSite;
+}
+
+pub struct RegisterSingleUrlUseCase;
+
+impl IRegisterSingleUrlUseCase for RegisterSingleUrlUseCase {
+    fn execute(&self, url: String) -> RssFeedSite {
+        todo!()
+    }
 }
 
 #[cfg(test)]
@@ -12,8 +20,9 @@ mod tests {
     fn test_register_single_url() {
         let url = "http://lorem-rss.herokuapp.com/feed".to_string();
 
+        let usecase = RegisterSingleUrlUseCase;
 
-        let result = register_single_url(url.clone());
+        let result = usecase.execute(url.clone());
 
         let expected = RssFeedSite {
             url: url.to_string(),

@@ -1,15 +1,20 @@
-
+use usecase::register_function::register_url_usecase::RegisterSingleUrlUseCase
 use anyhow::Error;
-use port::register::register_feed_url_port::RegisterUrlPort;
 
 pub struct SingleFeedUrl(pub String);
 pub struct RegisterUrlController;
 
-impl RegisterUrlPort for RegisterUrlController {
+impl RegisterSingleUrlUseCase for RegisterUrlController {
     fn register_single_feed_url(&self, url: String) -> Result<String, Error> {
         todo!()
     }
 }
+
+fn new_register_url_controller() ->  {
+    RegisterUrlController
+}
+
+
 
 #[cfg(test)]
 mod tests {
