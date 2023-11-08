@@ -27,14 +27,14 @@ struct HttpClientDriver;
 
 #[async_trait::async_trait]
 impl HttpClientPort for HttpClientDriver {
-    async fn get(&self, url: String) -> Result<Channel, Error> {
+    async fn get(&self, url: String) -> Result<RssFeedSite, Error> {
         let response = reqwest::get(url.clone())
             .await?
             .bytes()
             .await?;
 
         let channel = Channel::read_from(&response[..])?;
-        let rss_feed_item = channel.items.iter().map(|item|
+        let rss_feed_item = channel.clone().items.iter().map(|item|
             FeedItem {
                 title: item.title.clone(),
                 link: item.link.clone(),
@@ -59,9 +59,9 @@ impl HttpClientPort for HttpClientDriver {
 
         Ok(RssFeedSite {
             url,
-            title: channel.title,
-            description: channel.description,
-            link: channel.link,
+            title: channel.clone().title,
+            description: channel.clone().description,
+            link: channel.clone().link,
             items: rss_feed_item,
             item_description: channel.clone().description,
             language: match channel.clone().language {
