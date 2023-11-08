@@ -2654,6 +2654,7 @@ dependencies = [
  "anyhow",
  "async-trait",
  "domain",
+ "rss",
 ]
 
 [[package]]
