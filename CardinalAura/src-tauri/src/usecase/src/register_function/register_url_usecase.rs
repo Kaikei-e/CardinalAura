@@ -23,7 +23,7 @@ mod tests {
             title: "lorem".to_string(),
             description: "hogehoge".to_string(),
             link: "http://example.com/".to_string(),
-            links: "http://example.com/".to_string(),
+            items: "http://example.com/".to_string(),
             item_description: "".to_string(),
             language: "".to_string(),
         };

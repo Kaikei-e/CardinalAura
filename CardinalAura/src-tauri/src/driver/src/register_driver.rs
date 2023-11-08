@@ -43,7 +43,7 @@ pub async fn register_rss_feed_site(
     .bind(rss_feed_url.title)
     .bind(rss_feed_url.description)
     .bind(rss_feed_url.link)
-    .bind(rss_feed_url.links)
+    .bind(rss_feed_url.items)
     .bind(rss_feed_url.item_description)
     .bind(rss_feed_url.language)
     .execute(&pool)
