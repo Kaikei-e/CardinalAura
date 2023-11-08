@@ -27,7 +27,7 @@ struct HttpClientDriver;
 
 #[async_trait::async_trait]
 impl HttpClientPort for HttpClientDriver {
-    async fn get(&self, url: String) -> Result<RssFeedSite, Error> {
+    async fn get(&self, url: String) -> Result<Channel, Error> {
         let response = reqwest::get(url.clone())
             .await?
             .bytes()
