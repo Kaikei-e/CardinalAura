@@ -36,11 +36,9 @@ mod tests {
     #[test]
     fn test_register_single_url() {
         let url = "http://lorem-rss.herokuapp.com/feed".to_string();
-
-        let usecase = RegisterSingleUrlUseCase::new(HttpClientDriver::new());
-
         let mock_http_client_port = MockHttpClientPort::new();
 
+        let usecase = RegisterSingleUrlUseCase::new(mock_http_client_port);
         let result = usecase.execute(url.clone());
 
         let expected = RssFeedSite {
