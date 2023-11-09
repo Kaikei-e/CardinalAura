@@ -23,10 +23,14 @@ struct FeedItem {
     pub dublin_core_ext: Option<dublincore::DublinCoreExtension>,
 }
 
-struct HttpClientDriver;
+pub struct HttpClientDriver;
 
 #[async_trait::async_trait]
 impl HttpClientPort for HttpClientDriver {
+    fn new() -> Self {
+        HttpClientDriver
+    }
+
     async fn get(&self, url: String) -> Result<RssFeedSite, Error> {
         let response = reqwest::get(url.clone())
             .await?

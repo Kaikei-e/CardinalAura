@@ -9,6 +9,7 @@ edition = "2021"
 anyhow = "1.0"
 async-trait = { version = "0.1.74" }
 rss = {version = "2.0.6"}
+mockall = "0.11.4"
 
 # own dependencies
 domain = { path = "../domain" }
