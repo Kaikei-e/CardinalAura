@@ -28,7 +28,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_register_single_url() {
-        let url = "http://lorem-rss.herokuapp.com/feed".to_string();
+        let url = "https://example.com/feed".to_string();
         let passing_url = url.clone();
 
         let mut mock_http_client_port = MockHttpClientPort::default();
@@ -40,12 +40,12 @@ mod tests {
             .return_once(move |_| {
                 Ok(RssFeedSite {
                     url: url.clone(),
-                    title: "lorem".to_string(),
+                    title: "example".to_string(),
                     description: "hogehoge".to_string(),
-                    link: "http://example.com/".to_string(),
+                    link: "https://example.com/".to_string(),
                     items: vec![
-                        "http://example.com/".to_string(),
-                        "http://example.com/".to_string(),
+                        "https://example.com/".to_string(),
+                        "https://example.com/".to_string(),
                     ]
                     .iter()
                     .map(|item| item.to_string())
@@ -59,17 +59,17 @@ mod tests {
         let result = usecase.execute(passing_url).await;
 
         let expected_items = vec![
-            "http://example.com/".to_string(),
-            "http://example.com/".to_string(),
+            "https://example.com/".to_string(),
+            "https://example.com/".to_string(),
         ]
         .iter()
         .map(|item| item.to_string())
         .collect();
         let expected = RssFeedSite {
-            url: "http://lorem-rss.herokuapp.com/feed".to_string(),
-            title: "lorem".to_string(),
+            url: "https://example.com/feed".to_string(),
+            title: "example".to_string(),
             description: "hogehoge".to_string(),
-            link: "http://example.com/".to_string(),
+            link: "https://example.com/".to_string(),
             items: expected_items,
             item_description: "".to_string(),
             language: "".to_string(),
