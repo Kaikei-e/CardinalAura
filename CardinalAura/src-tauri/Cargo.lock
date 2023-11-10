@@ -80,6 +80,9 @@ name = "anyhow"
 version = "1.0.75"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a4668cab20f66d8d020e1fbc0ebe47217433c1b6c8f2040faf858554e394ace6"
+dependencies = [
+ "backtrace",
+]
 
 [[package]]
 name = "async-trait"
@@ -290,7 +293,6 @@ dependencies = [
 name = "cardinal_aura"
 version = "0.0.1"
 dependencies = [
- "anyhow",
  "command",
  "controller",
  "directories",
@@ -300,8 +302,6 @@ dependencies = [
  "futures",
  "gateway",
  "port",
- "serde",
- "serde_json",
  "sqlx",
  "tauri",
  "tauri-build",
@@ -434,6 +434,7 @@ name = "command"
 version = "0.1.0"
 dependencies = [
  "tauri",
+ "usecase",
 ]
 
 [[package]]

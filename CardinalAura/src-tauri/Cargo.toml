@@ -26,10 +26,7 @@ sqlx = { version = "0.7", features = [ "runtime-tokio", "sqlite", "uuid", "time"
 
 [dependencies]
 tauri = { version = "1.5.2", features = [ "dialog-message", "dialog-confirm", "shell-open"] }
-serde_json = "1.0.107"
-serde = { version = "1.0.189", features = ["derive"] }
 sqlx = { version = "0.7", features = [ "runtime-tokio", "sqlite", "uuid", "time", "json"] }
-anyhow = "1.0"
 futures = "0.3"
 dotenv = "0.15.0"
 directories = "5.0.1"
@@ -41,6 +38,12 @@ command = { path = "src/command", version = "0.1.0"     }
 gateway = { path = "src/gateway", version = "0.1.0" }
 port = { path = "src/port", version = "0.1.0" }
 domain = { path = "src/domain", version = "0.1.0" }
+
+[workspace.dependencies]
+serde_json = "1.0.107"
+serde = { version = "1.0.189", features = ["derive"] }
+anyhow = { version = "1.0.75", features = ["backtrace"] }
+
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
