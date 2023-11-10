@@ -7,23 +7,16 @@ pub struct RegisterSingleUrlUseCase<T> {
 
 impl<T: HttpClientPort> RegisterSingleUrlUseCase<T> {
     pub fn new(http_client_port: T) -> RegisterSingleUrlUseCase<T> {
-        RegisterSingleUrlUseCase {
-            http_client_port,
-        }
+        RegisterSingleUrlUseCase { http_client_port }
     }
 
-    pub fn execute(&self, url: String) -> RssFeedSite {
-        let rss_feed_site = RssFeedSite {
-            url: url.to_string(),
-            title: "lorem".to_string(),
-            description: "hogehoge".to_string(),
-            link: "http://example.com/".to_string(),
-            items: "http://example.com/".to_string(),
-            item_description: "".to_string(),
-            language: "".to_string(),
-        };
+    pub async fn execute(&self, url: String) -> RssFeedSite {
+        let rss_feed_site = self.http_client_port.get(url.clone()).await;
 
-        rss_feed_site
+        match rss_feed_site {
+            Ok(rss_feed_site) => rss_feed_site,
+            Err(_) => todo!("error handling"),
+        }
     }
 }
 
@@ -33,20 +26,45 @@ mod tests {
     use mockall::predicate::*;
     use port::http_client::http_client_port::MockHttpClientPort;
 
-    #[test]
-    fn test_register_single_url() {
+    #[tokio::test]
+    async fn test_register_single_url() {
         let url = "http://lorem-rss.herokuapp.com/feed".to_string();
-        let mock_http_client_port = MockHttpClientPort::new();
+        let passing_url = url.clone();
+
+        let mut mock_http_client_port = MockHttpClientPort::new();
+
+        mock_http_client_port
+            .expect_get()
+            .with(eq(url.clone()))
+            .times(1)
+            .return_once(move |_| {
+                Ok(RssFeedSite {
+                    url: url.clone(),
+                    title: "lorem".to_string(),
+                    description: "hogehoge".to_string(),
+                    link: "http://example.com/".to_string(),
+                    items: vec![
+                        "http://example.com/".to_string(),
+                        "http://example.com/".to_string(),
+                    ].iter().map(|item| item.to_string()).collect(),
+                    item_description: "".to_string(),
+                    language: "".to_string(),
+                })
+            });
 
         let usecase = RegisterSingleUrlUseCase::new(mock_http_client_port);
-        let result = usecase.execute(url.clone());
+        let result = usecase.execute(passing_url).await;
 
+        let expected_items = vec![
+            "http://example.com/".to_string(),
+            "http://example.com/".to_string(),
+        ].iter().map(|item| item.to_string()).collect();
         let expected = RssFeedSite {
-            url: url.to_string(),
+            url: "http://lorem-rss.herokuapp.com/feed".to_string(),
             title: "lorem".to_string(),
             description: "hogehoge".to_string(),
             link: "http://example.com/".to_string(),
-            items: "http://example.com/".to_string(),
+            items: expected_items,
             item_description: "".to_string(),
             language: "".to_string(),
         };

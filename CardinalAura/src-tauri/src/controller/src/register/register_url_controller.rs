@@ -1,4 +1,3 @@
-
 pub struct SingleFeedUrl(pub String);
 pub struct RegisterUrlController;
 //
@@ -24,7 +23,6 @@ mod tests {
         let register_url_gateway = RegisterUrlController;
         let url = "http://lorem-rss.herokuapp.com/feed".to_string();
         // let result = register_url_gateway.register_single_feed_url(url);
-
 
         // assert!(result.is_ok());
     }

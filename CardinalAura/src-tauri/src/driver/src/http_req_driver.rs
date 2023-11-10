@@ -1,8 +1,8 @@
 use anyhow::Error;
-use port::http_client::http_client_port::HttpClientPort;
-use rss::{Category, Channel, Enclosure, Guid, Source};
-use rss::extension::{dublincore, ExtensionMap};
 use domain::rss_feed_site::RssFeedSite;
+use port::http_client::http_client_port::HttpClientPort;
+use rss::extension::{dublincore, ExtensionMap};
+use rss::{Category, Channel, Enclosure, Guid, Source};
 
 #[derive(Debug)]
 struct FeedItem {
@@ -32,14 +32,14 @@ impl HttpClientPort for HttpClientDriver {
     }
 
     async fn get(&self, url: String) -> Result<RssFeedSite, Error> {
-        let response = reqwest::get(url.clone())
-            .await?
-            .bytes()
-            .await?;
+        let response = reqwest::get(url.clone()).await?.bytes().await?;
 
         let channel = Channel::read_from(&response[..])?;
-        let rss_feed_item = channel.clone().items.iter().map(|item|
-            FeedItem {
+        let rss_feed_item = channel
+            .clone()
+            .items
+            .iter()
+            .map(|item| FeedItem {
                 title: item.title.clone(),
                 link: item.link.clone(),
                 description: item.description.clone(),
@@ -54,10 +54,10 @@ impl HttpClientPort for HttpClientDriver {
                 content: item.content.clone(),
                 extensions: item.extensions.clone(),
                 dublin_core_ext: item.dublin_core_ext.clone(),
-            }
-        ).map(|item| {
-            format!("{:?}", item)
-        }).collect::<Vec<String>>().join("\n");
+            })
+            .map(|item| format!("{:?}", item))
+            .collect::<Vec<String>>()
+            .join("\n");
 
         println!("{:?}", rss_feed_item.clone());
 

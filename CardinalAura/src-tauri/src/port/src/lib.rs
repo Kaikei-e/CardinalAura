@@ -1,5 +1,5 @@
-pub mod register;
 pub mod http_client;
+pub mod register;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
