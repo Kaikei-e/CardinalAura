@@ -31,7 +31,7 @@ mod tests {
         let url = "http://lorem-rss.herokuapp.com/feed".to_string();
         let passing_url = url.clone();
 
-        let mut mock_http_client_port = MockHttpClientPort::new();
+        let mut mock_http_client_port = MockHttpClientPort::default();
 
         mock_http_client_port
             .expect_get()
@@ -46,7 +46,10 @@ mod tests {
                     items: vec![
                         "http://example.com/".to_string(),
                         "http://example.com/".to_string(),
-                    ].iter().map(|item| item.to_string()).collect(),
+                    ]
+                    .iter()
+                    .map(|item| item.to_string())
+                    .collect(),
                     item_description: "".to_string(),
                     language: "".to_string(),
                 })
@@ -58,7 +61,10 @@ mod tests {
         let expected_items = vec![
             "http://example.com/".to_string(),
             "http://example.com/".to_string(),
-        ].iter().map(|item| item.to_string()).collect();
+        ]
+        .iter()
+        .map(|item| item.to_string())
+        .collect();
         let expected = RssFeedSite {
             url: "http://lorem-rss.herokuapp.com/feed".to_string(),
             title: "lorem".to_string(),
