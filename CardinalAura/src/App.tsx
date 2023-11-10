@@ -26,10 +26,10 @@ function App() {
         <div className="w-3/12">
           <button
             className="w-11/12 p-2
-          border-2 border-white
+          border-2 border-black
           rounded-md
-          hover:bg-white hover:text-gray-700
-          text-white font-semibold"
+          hover:bg-black hover:text-white
+          text-black font-semibold"
             onClick={() => {
               AllRoutes.navigate("/home");
             }}

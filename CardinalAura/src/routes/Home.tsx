@@ -10,7 +10,7 @@ export const Home = () => {
   const [isInsightModalOpen, setIsInsightModalOpen] = useState(false);
 
   return (
-    <div className="h-screen p-8 text-gray-700 bg-red-300">
+    <div className="h-screen p-8 text-gray-700 bg-orange-200">
       <h1 className="h1-style pt-3">Home</h1>
       <p className="font-semibold text-xl text-gray-700">
         Welcome to Cardinal Aura. Curiosity guides you.

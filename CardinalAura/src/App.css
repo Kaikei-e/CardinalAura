@@ -8,8 +8,11 @@
   margin: 0;
 
   color: #0f0f0f;
-  background: #fecaca;
-  background: linear-gradient(to right, #fecaca, #dc2626);
+  /* background: #fecaca;
+  background: linear-gradient(to right, #fecaca, #dc2626); */
+  background-image: url("../public/cardinal_aura_bg_2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 
   display: flex;
   flex-direction: column;
