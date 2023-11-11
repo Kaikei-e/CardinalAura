@@ -1,5 +1,6 @@
 use domain::rss_feed_site::RssFeedSite;
 use driver::http_req_driver::HttpClientDriver;
+use driver::register_driver::{RepositoryDriver, SqliteDriver};
 use usecase::register_function::register_url_usecase::RegisterSingleUrlUseCase;
 
 #[derive(serde::Serialize)]
