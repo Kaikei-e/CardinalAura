@@ -7,6 +7,8 @@ edition = "2021"
 
 [dependencies]
 tauri = { wrokspace = true }
+anyhow = { workspace = true }
 
 # own dependencies
 usecase = { path = "../usecase" }
+port = { path = "../port" }
