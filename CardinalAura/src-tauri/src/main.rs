@@ -8,6 +8,7 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
+use command::register_function::register_url;
 use driver::sqlite_driver;
 
 fn main() {
@@ -43,7 +44,7 @@ fn main() {
     }
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![greet, register_url::invoke,])
         .setup(|app| {
             app.manage(conn_pool);
             Ok(())

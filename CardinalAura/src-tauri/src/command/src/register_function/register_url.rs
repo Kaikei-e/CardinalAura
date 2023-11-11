@@ -28,7 +28,7 @@ impl RssFeedSiteDto {
 }
 
 #[tauri::command]
-pub fn invoke(url: String) -> Result<String, anyhow::Error> {
+pub fn invoke(url: String) -> String {
     let http_client_port = HttpClientDriver {};
     let register_url_usecase = RegisterSingleUrlUseCase::new(http_client_port);
 
@@ -37,9 +37,13 @@ pub fn invoke(url: String) -> Result<String, anyhow::Error> {
     match result {
         Ok(result) => {
             let rss_feed_site_dto = RssFeedSiteDto::from(result);
-            let json = serde_json::to_string(&rss_feed_site_dto)?;
-            Ok(json)
+            let json = serde_json::to_string(&rss_feed_site_dto);
+
+            match json {
+                Ok(js) => js,
+                Err(_) => todo!(),
+            }
         }
-        Err(_) => Err(anyhow::anyhow!("Failed to register URL")),
+        Err(_) => "Failed to register URL!".to_string(),
     }
 }

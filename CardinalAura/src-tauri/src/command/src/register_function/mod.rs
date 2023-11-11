@@ -1,1 +1,1 @@
-mod register_url;
+pub mod register_url;
