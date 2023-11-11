@@ -1,8 +1,15 @@
-use sqlx::{
-    sqlite::{SqliteConnectOptions, SqliteJournalMode, SqlitePoolOptions, SqliteSynchronous},
-    SqlitePool,
-};
+use sqlx::{Pool, sqlite::{SqliteConnectOptions, SqliteJournalMode, SqlitePoolOptions, SqliteSynchronous}, Sqlite, SqlitePool};
 use std::str::FromStr;
+
+pub struct SqliteDriver {
+    pub pool: SqlitePool,
+}
+
+impl SqliteDriver {
+    pub fn new(pool: Pool<Sqlite>) -> Self {
+        SqliteDriver { pool }
+    }
+}
 
 pub async fn initialize_connection(db_url: String) -> Result<SqlitePool, sqlx::Error> {
     println!("Database file: {:?}", db_url);

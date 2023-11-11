@@ -1,16 +1,12 @@
 [package]
-name = "gateway"
+name = "dependency_injection"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = { workspace = "true"}
-async-trait = { workspace = "true"}
 sqlx = { workspace = "true", features = [ "runtime-tokio", "sqlite", "uuid", "time", "json"] }
 
-# own modules
-port = { path = "../port" }
-domain = { path = "../domain" }
+# own dependencies
 driver = { path = "../driver" }

@@ -295,6 +295,7 @@ version = "0.0.1"
 dependencies = [
  "command",
  "controller",
+ "dependency_injection",
  "directories",
  "domain",
  "dotenv",
@@ -379,8 +380,10 @@ checksum = "7f2c685bad3eb3d45a01354cedb7d5faa66194d1d58ba6e267a8de788f79db38"
 dependencies = [
  "android-tzdata",
  "iana-time-zone",
+ "js-sys",
  "num-traits",
  "serde",
+ "wasm-bindgen",
  "windows-targets",
 ]
 
@@ -684,6 +687,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "dependency_injection"
+version = "0.1.0"
+dependencies = [
+ "driver",
+ "sqlx",
+]
+
+[[package]]
 name = "der"
 version = "0.7.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -854,6 +865,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "async-trait",
+ "chrono",
  "directories",
  "domain",
  "dotenv",
@@ -1193,7 +1205,11 @@ name = "gateway"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "async-trait",
+ "domain",
+ "driver",
  "port",
+ "sqlx",
 ]
 
 [[package]]

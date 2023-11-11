@@ -16,7 +16,7 @@ pub struct RegisterUrlController;
 #[cfg(test)]
 mod tests {
     use super::*;
-    use port::register::register_feed_url_port::RegisterUrlPort;
+    use port::register::register_feed_url_port::RegisterFeedUrlPort;
 
     #[test]
     fn test_register_single_feed_url() {

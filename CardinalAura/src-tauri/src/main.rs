@@ -38,6 +38,8 @@ fn main() {
     ))
     .unwrap();
 
+    dependency_injection::dependency_injection(conn_pool.clone());
+
     if std::fs::metadata(database_file).is_ok() {
         block_on(sqlite_driver::migrate_db(&conn_pool))
             .expect("failed to migrate db and initialization was failed.");
