@@ -44,7 +44,10 @@ fn main() {
     }
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet, register_url::invoke,])
+        .invoke_handler(tauri::generate_handler![
+            greet,
+            register_url::invoke_register_single_feed_link_command,
+        ])
         .setup(|app| {
             app.manage(conn_pool);
             Ok(())

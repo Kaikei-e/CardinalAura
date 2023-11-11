@@ -16,10 +16,10 @@ struct RssFeedSiteDto {
 impl RssFeedSiteDto {
     fn from(rss_feed_site: RssFeedSite) -> RssFeedSiteDto {
         RssFeedSiteDto {
-            url: rss_feed_site.url,
+            url: rss_feed_site.link,
             title: rss_feed_site.title,
             description: rss_feed_site.description,
-            link: rss_feed_site.link,
+            link: rss_feed_site.url,
             items: rss_feed_site.items,
             item_description: rss_feed_site.item_description,
             language: rss_feed_site.language,
@@ -28,7 +28,7 @@ impl RssFeedSiteDto {
 }
 
 #[tauri::command]
-pub fn invoke(url: String) -> String {
+pub fn invoke_register_single_feed_link_command(url: String) -> String {
     let http_client_port = HttpClientDriver {};
     let register_url_usecase = RegisterSingleUrlUseCase::new(http_client_port);
 
