@@ -10,8 +10,8 @@ impl<T: HttpClientPort> RegisterSingleUrlUseCase<T> {
         RegisterSingleUrlUseCase { http_client_port }
     }
 
-    pub async fn execute(&self, url: String) -> RssFeedSite {
-        let rss_feed_site = self.http_client_port.get(url.clone()).await;
+    pub fn execute(&self, url: String) -> RssFeedSite {
+        let rss_feed_site = self.http_client_port.get(url.clone());
 
         match rss_feed_site {
             Ok(rss_feed_site) => rss_feed_site,
@@ -56,7 +56,7 @@ mod tests {
             });
 
         let usecase = RegisterSingleUrlUseCase::new(mock_http_client_port);
-        let result = usecase.execute(passing_url).await;
+        let result = usecase.execute(passing_url);
 
         let expected_items = vec![
             "https://example.com/".to_string(),
