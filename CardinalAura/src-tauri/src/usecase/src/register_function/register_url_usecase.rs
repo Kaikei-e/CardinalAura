@@ -1,6 +1,9 @@
 use domain::rss_feed_site::RssFeedSite;
 use port::http_client::http_client_port::HttpClientPort;
 
+use anyhow::Error;
+use std::result::Result;
+
 pub struct RegisterSingleUrlUseCase<T> {
     http_client_port: T,
 }
@@ -10,11 +13,11 @@ impl<T: HttpClientPort> RegisterSingleUrlUseCase<T> {
         RegisterSingleUrlUseCase { http_client_port }
     }
 
-    pub fn execute(&self, url: String) -> RssFeedSite {
-        let rss_feed_site = self.http_client_port.get(url.clone());
+    pub async fn execute(&self, url: String) -> Result<RssFeedSite, Error> {
+        let rss_feed_site = self.http_client_port.get(url.clone()).await;
 
         match rss_feed_site {
-            Ok(rss_feed_site) => rss_feed_site,
+            Ok(rss_feed_site) => Ok(rss_feed_site),
             Err(_) => todo!("error handling"),
         }
     }
@@ -23,6 +26,7 @@ impl<T: HttpClientPort> RegisterSingleUrlUseCase<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use anyhow::Ok;
     use mockall::predicate::*;
     use port::http_client::http_client_port::MockHttpClientPort;
 
@@ -56,7 +60,7 @@ mod tests {
             });
 
         let usecase = RegisterSingleUrlUseCase::new(mock_http_client_port);
-        let result = usecase.execute(passing_url);
+        let result = usecase.execute(passing_url).await.unwrap();
 
         let expected_items = vec![
             "https://example.com/".to_string(),
@@ -65,6 +69,7 @@ mod tests {
         .iter()
         .map(|item| item.to_string())
         .collect();
+
         let expected = RssFeedSite {
             url: "https://example.com/feed".to_string(),
             title: "example".to_string(),

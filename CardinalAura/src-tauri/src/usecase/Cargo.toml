@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 mockall = "0.11.4"
+anyhow ={ workspace = true }
 
 # local dependencies
 domain = { path="../domain", version = "0.1.0"}
