@@ -1,7 +1,7 @@
 use domain::rss_feed_site::RssFeedSite;
-use driver::http_req_driver::HttpClientDriver;
-use driver::register_driver::{RepositoryDriver, SqliteDriver};
 use usecase::register_function::register_url_usecase::RegisterSingleUrlUseCase;
+use port::http_client::http_client_port::{HttpClientPort};
+use port::register::register_feed_url_port::RegisterFeedUrlPort;
 
 #[derive(serde::Serialize)]
 struct RssFeedSiteDto {
@@ -30,17 +30,16 @@ impl RssFeedSiteDto {
 
 #[tauri::command]
 pub fn invoke_register_single_feed_link_command(url: String) -> String {
-    let http_client_port = HttpClientDriver {};
-    let register_url_usecase = RegisterSingleUrlUseCase::new(http_client_port);
+    let http_client_port = HttpClientPort::new();
+    let register_url_port = RegisterFeedUrlPort::new();
+    let register_url_usecase = RegisterSingleUrlUseCase::new(http_client_port, register_url_port);
 
-    let result = tauri::async_runtime::block_on(register_url_usecase.execute(url));
+    let registered_link = tauri::async_runtime::block_on(register_url_usecase.execute(url));
 
-    match result {
+    match registered_link {
         Ok(result) => {
-            let rss_feed_site_dto = RssFeedSiteDto::from(result);
-            let json = serde_json::to_string(&rss_feed_site_dto);
-
-            match json {
+            let registered_link_json = serde_json::from_str(&result);
+            match registered_link_json {
                 Ok(js) => js,
                 Err(_) => todo!(),
             }
