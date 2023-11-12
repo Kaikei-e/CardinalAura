@@ -1,6 +1,7 @@
 use domain::rss_feed_site::RssFeedSite;
 use sqlx::types::uuid;
-use sqlx::{Pool, Sqlite, SqlitePool};
+use sqlx::{Pool, Sqlite, SqlitePool, Any};
+use port::repository::repository_port::RepositoryPort;
 
 #[derive(sqlx::FromRow, Default)]
 struct RssFeedSiteDto {
@@ -24,7 +25,7 @@ pub struct SqliteDriver {
     pub pool: SqlitePool,
 }
 
-impl RepositoryDriver for SqliteDriver {
+impl RepositoryPort for SqliteDriver {
     fn new(pool: Pool<Sqlite>) -> Self {
         SqliteDriver { pool: pool }
     }
