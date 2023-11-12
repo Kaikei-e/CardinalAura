@@ -440,6 +440,7 @@ dependencies = [
  "anyhow",
  "domain",
  "driver",
+ "port",
  "serde",
  "serde_json",
  "tauri",
