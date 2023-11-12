@@ -13,7 +13,7 @@ impl RegisterFeedUrlPort for RegisterUrlGateway {
     }
 
     async fn register_url(&self, feed: RssFeedSite) -> Result<String, Error> {
-        let resutl = register_rss_feed_site(feed).await;
+        let result = register_rss_feed_site(feed).await;
 
         todo!()
     }
