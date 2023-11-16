@@ -692,6 +692,7 @@ name = "dependency_injection"
 version = "0.1.0"
 dependencies = [
  "driver",
+ "port",
  "sqlx",
  "usecase",
 ]

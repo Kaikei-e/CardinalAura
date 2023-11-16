@@ -32,12 +32,16 @@ impl RssFeedSiteDto {
 }
 
 #[tauri::command]
-pub fn invoke_register_single_feed_link_command<R: RepositoryPort>(url: String) -> String {
+pub fn invoke_register_single_feed_link_command<R: RepositoryPort + std::marker::Sync>(
+    url: String,
+) -> String {
     let http_client_port: HttpClientDriver = HttpClientPort::new();
     let register_url_port: SqliteDriver<R> = RegisterFeedUrlPort::new();
-    let register_url_usecase = RegisterSingleUrlUseCase::new(http_client_port, register_url_port);
 
-    let registered_link = tauri::async_runtime::block_on(register_url_usecase.execute(url));
+    let register_single_url_usecase =
+        RegisterSingleUrlUseCase::new(http_client_port, register_url_port);
+
+    let registered_link = tauri::async_runtime::block_on(register_single_url_usecase.execute(url));
 
     match registered_link {
         Ok(result) => {
