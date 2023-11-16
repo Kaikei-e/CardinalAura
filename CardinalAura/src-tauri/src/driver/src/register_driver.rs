@@ -1,10 +1,11 @@
 use domain::rss_feed_site::RssFeedSite;
+use port::register::register_feed_url_port::RegisterFeedUrlPort;
+use port::repository::repository_port::{ConnectionContext, DbConnection, RepositoryPort};
 use sqlx::types::uuid;
-use sqlx::{Pool, Sqlite, SqlitePool, Any};
-use port::repository::repository_port::RepositoryPort;
+use sqlx::SqlitePool;
 
 #[derive(sqlx::FromRow, Default)]
-struct RssFeedSiteDto {
+pub struct RssFeedSiteDtoWrite {
     pub uuid: String,
     pub url: String,
     pub title: String,
@@ -13,29 +14,41 @@ struct RssFeedSiteDto {
     pub links: String,
     pub item_description: String,
     pub language: String,
-    pub created_at: String,
-    pub updated_at: String,
-    pub feed_category: i64,
-    pub is_active: i64,
-    pub is_favorite: i64,
-    pub is_read: i64,
 }
 
-pub struct SqliteDriver {
-    pub pool: SqlitePool,
+pub struct SqliteDriver<R: RepositoryPort> {
+    repository: R,
 }
 
-impl RepositoryPort for SqliteDriver {
-    fn new(pool: Pool<Sqlite>) -> Self {
-        SqliteDriver { pool: pool }
+#[async_trait::async_trait]
+impl<R: RepositoryPort + std::marker::Sync> RegisterFeedUrlPort for SqliteDriver<R> {
+    fn new() -> SqliteDriver<R> {
+        SqliteDriver {
+            repository: R::new(),
+        }
+    }
+
+    async fn register_url(&self, feed: RssFeedSite) -> Result<String, anyhow::Error> {
+        let connection = self.repository.get_connection();
+
+        if let Err(e) = connection {
+            panic!("Failed to get connection from pool: {}", e);
+        }
+
+        let dto = RssFeedSiteDtoWrite::from(feed);
+        let url = dto.url.clone();
+
+        let result = register_rss_feed_site(connection.unwrap().pool, dto).await;
+        match result {
+            Ok(_) => Ok(url.to_string()),
+            Err(e) => Err(anyhow::Error::new(e)),
+        }
     }
 }
 
-impl RssFeedSiteDto {
+impl RssFeedSiteDtoWrite {
     fn default() -> Self {
-        let now = chrono::Local::now().to_string();
-
-        RssFeedSiteDto {
+        RssFeedSiteDtoWrite {
             uuid: "".to_string(),
             url: "".to_string(),
             title: "".to_string(),
@@ -44,19 +57,26 @@ impl RssFeedSiteDto {
             links: "".to_string(),
             item_description: "".to_string(),
             language: "".to_string(),
-            created_at: now.clone(),
-            updated_at: now,
-            feed_category: 0,
-            is_active: 0,
-            is_favorite: 0,
-            is_read: 0,
+        }
+    }
+
+    fn from(feed: RssFeedSite) -> Self {
+        RssFeedSiteDtoWrite {
+            uuid: uuid::Uuid::new_v4().to_string(),
+            url: feed.url,
+            title: feed.title,
+            description: feed.description,
+            link: feed.link,
+            links: feed.items,
+            item_description: feed.item_description,
+            language: feed.language,
         }
     }
 }
 
 pub async fn register_rss_feed_site(
     pool: SqlitePool,
-    rss_feed_url: RssFeedSite,
+    rss_feed: RssFeedSiteDtoWrite,
 ) -> Result<(), sqlx::Error> {
     let uid = uuid::Uuid::new_v4();
     let row_affected = sqlx::query(
@@ -66,13 +86,13 @@ pub async fn register_rss_feed_site(
          VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     )
     .bind(uid)
-    .bind(rss_feed_url.url)
-    .bind(rss_feed_url.title)
-    .bind(rss_feed_url.description)
-    .bind(rss_feed_url.link)
-    .bind(rss_feed_url.items)
-    .bind(rss_feed_url.item_description)
-    .bind(rss_feed_url.language)
+    .bind(rss_feed.url)
+    .bind(rss_feed.title)
+    .bind(rss_feed.description)
+    .bind(rss_feed.link)
+    .bind(rss_feed.links)
+    .bind(rss_feed.item_description)
+    .bind(rss_feed.language)
     .execute(&pool)
     .await?;
 

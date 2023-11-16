@@ -31,8 +31,6 @@ fn main() {
         std::fs::create_dir(database_dir).expect("failed to create database directory");
     }
 
-    // let database_url = format!("sqlite://{}", database_file.to_str().unwrap());
-
     let conn_pool = block_on(sqlite_driver::initialize_connection(
         database_file.to_str().unwrap().to_string(),
     ))

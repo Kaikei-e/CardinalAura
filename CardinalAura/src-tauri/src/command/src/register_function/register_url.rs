@@ -1,7 +1,10 @@
 use domain::rss_feed_site::RssFeedSite;
-use usecase::register_function::register_url_usecase::RegisterSingleUrlUseCase;
-use port::http_client::http_client_port::{HttpClientPort};
+use driver::http_req_driver::HttpClientDriver;
+use driver::register_driver::SqliteDriver;
+use port::http_client::http_client_port::{self, HttpClientPort};
 use port::register::register_feed_url_port::RegisterFeedUrlPort;
+use port::repository::repository_port::RepositoryPort;
+use usecase::register_function::register_url_usecase::RegisterSingleUrlUseCase;
 
 #[derive(serde::Serialize)]
 struct RssFeedSiteDto {
@@ -29,9 +32,9 @@ impl RssFeedSiteDto {
 }
 
 #[tauri::command]
-pub fn invoke_register_single_feed_link_command(url: String) -> String {
-    let http_client_port = HttpClientPort::new();
-    let register_url_port = RegisterFeedUrlPort::new();
+pub fn invoke_register_single_feed_link_command<R: RepositoryPort>(url: String) -> String {
+    let http_client_port: HttpClientDriver = HttpClientPort::new();
+    let register_url_port: SqliteDriver<R> = RegisterFeedUrlPort::new();
     let register_url_usecase = RegisterSingleUrlUseCase::new(http_client_port, register_url_port);
 
     let registered_link = tauri::async_runtime::block_on(register_url_usecase.execute(url));
