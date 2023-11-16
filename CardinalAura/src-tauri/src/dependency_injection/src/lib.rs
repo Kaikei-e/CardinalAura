@@ -9,8 +9,7 @@ use driver::register_driver::SqliteDriver;
 
 pub struct DIUsecase {
     pub register_single_url_usecase:
-        RegisterSingleUrlUseCase<HttpClientDriver, 
-            SqliteDriver::<Sqlite>,
+        RegisterSingleUrlUseCase<HttpClientDriver, SqliteDriver<dyn RepositoryPort<ConnectionContext = Type>>
         >,
 }
 pub fn dependency_injection(pool: Pool<Sqlite>) -> DIUsecase {

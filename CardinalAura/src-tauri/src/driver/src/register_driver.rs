@@ -22,6 +22,7 @@ pub struct SqliteDriver<R: RepositoryPort> {
 
 #[async_trait::async_trait]
 impl<R: RepositoryPort + std::marker::Sync> RegisterFeedUrlPort for SqliteDriver<R> {
+    type ConnectionContext = Self;
     fn new() -> SqliteDriver<R> {
         SqliteDriver {
             repository: R::new(),
