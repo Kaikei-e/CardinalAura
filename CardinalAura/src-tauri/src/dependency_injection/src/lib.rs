@@ -1,5 +1,5 @@
 use port::http_client::http_client_port::HttpClientPort;
-use port::repository::repository_port::{RepositoryPort, ConnectionContext, DbConnection};
+use port::repository::repository_port::{ConnectionContext, DbConnection, RepositoryPort};
 use sqlx::{Pool, Sqlite};
 use usecase::register_function::register_url_usecase::RegisterSingleUrlUseCase;
 
@@ -8,9 +8,11 @@ use driver::http_req_driver::HttpClientDriver;
 use driver::register_driver::SqliteDriver;
 
 pub struct DIUsecase {
-    pub register_single_url_usecase: RegisterSingleUrlUseCase<HttpClientDriver, SqliteDriver<dyn RepositoryPort<DbConnection>>>,
+    pub register_single_url_usecase:
+        RegisterSingleUrlUseCase<HttpClientDriver, 
+            SqliteDriver::<Sqlite>,
+        >,
 }
-
 pub fn dependency_injection(pool: Pool<Sqlite>) -> DIUsecase {
     // Instantiate the concrete implementations of the traits.
     let http_driver = HttpClientDriver::new(); // Assumes `new` does not require parameters.
@@ -23,6 +25,6 @@ pub fn dependency_injection(pool: Pool<Sqlite>) -> DIUsecase {
     let usecase_container = DIUsecase {
         register_single_url_usecase,
     };
-    
+
     usecase_container
 }
