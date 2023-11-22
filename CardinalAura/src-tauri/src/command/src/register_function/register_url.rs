@@ -32,6 +32,7 @@ impl RssFeedSiteDto {
     }
 }
 
+// I broke this command
 #[tauri::command]
 pub fn invoke_register_single_feed_link_command(url: String) -> String {
     let http_client_port: HttpClientDriver = HttpClientPort::new();
