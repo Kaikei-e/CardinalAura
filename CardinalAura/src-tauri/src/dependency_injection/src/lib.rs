@@ -14,8 +14,8 @@ pub struct DIUsecase {
 }
 pub fn dependency_injection(pool: Pool<Sqlite>) -> DIUsecase {
     // Instantiate the concrete implementations of the traits.
-    let http_driver = HttpClientDriver::new(); // Assumes `new` does not require parameters.
-    let db_driver = SqliteDriver::new(pool); // Passes the SQL pool to the DB driver.
+    let http_driver = HttpClientDriver::new();
+    let db_driver = SqliteDriver::new(pool);
 
     // Create the use case with its dependencies injected.
     let register_single_url_usecase = RegisterSingleUrlUseCase::new(http_driver, db_driver);
