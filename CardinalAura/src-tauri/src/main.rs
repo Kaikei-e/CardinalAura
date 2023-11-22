@@ -9,45 +9,22 @@ fn greet(name: &str) -> String {
 }
 
 use command::register_function::register_url;
-use driver::sqlite_driver;
+use driver::sqlite_driver::SqliteConnectionContext;
+use port::repository::repository_port::RepositoryPort;
 
 fn main() {
-    use tauri::async_runtime::block_on;
+    // dependency_injection::dependency_injection(conn_pool.clone());
 
-    const DATABASE_DIR: &str = "driver/db/data";
-    const DATABASE_FILE: &str = "core_db.sqlite";
-
-    let base_dir = std::env::current_dir().expect("Can't access the current directory");
-
-    let app_dir = base_dir.join("src");
-
-    let database_dir = app_dir.join(DATABASE_DIR);
-    let database_file = database_dir.join(DATABASE_FILE);
-
-    println!("Database file: {:?}", database_file);
-
-    let is_db_exist = std::fs::metadata(database_dir.clone()).is_ok();
-    if !is_db_exist {
-        std::fs::create_dir(database_dir).expect("failed to create database directory");
-    }
-
-    let conn_pool = block_on(sqlite_driver::initialize_connection(
-        database_file.to_str().unwrap().to_string(),
-    ))
-    .unwrap();
-
-    dependency_injection::dependency_injection(conn_pool.clone());
-
-    if std::fs::metadata(database_file).is_ok() {
-        block_on(sqlite_driver::migrate_db(&conn_pool))
-            .expect("failed to migrate db and initialization was failed.");
-    }
+    // For lazy static initialization
+    let repository_port = SqliteConnectionContext::new();
+    let conn_pool = repository_port.get_connection().unwrap();
 
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             greet,
-            register_url::invoke_register_single_feed_link_command,
-        ])
+            register_url::invoke_register_single_feed_link_command
+
+            ])
         .setup(|app| {
             app.manage(conn_pool);
             Ok(())

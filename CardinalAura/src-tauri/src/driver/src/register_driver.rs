@@ -1,6 +1,8 @@
+use std::sync::Arc;
+
 use domain::rss_feed_site::RssFeedSite;
 use port::register::register_feed_url_port::RegisterFeedUrlPort;
-use port::repository::repository_port::{ConnectionContext, DbConnection, RepositoryPort};
+use port::repository::repository_port::RepositoryPort;
 use sqlx::types::uuid;
 use sqlx::SqlitePool;
 
@@ -22,7 +24,6 @@ pub struct SqliteDriver<R: RepositoryPort> {
 
 #[async_trait::async_trait]
 impl<R: RepositoryPort + std::marker::Sync> RegisterFeedUrlPort for SqliteDriver<R> {
-    type ConnectionContext = Self;
     fn new() -> SqliteDriver<R> {
         SqliteDriver {
             repository: R::new(),
@@ -38,6 +39,10 @@ impl<R: RepositoryPort + std::marker::Sync> RegisterFeedUrlPort for SqliteDriver
 
         let dto = RssFeedSiteDtoWrite::from(feed);
         let url = dto.url.clone();
+
+        if let Err(e) = connection {
+            panic!("Failed to get connection from pool: {}", e);
+        }
 
         let result = register_rss_feed_site(connection.unwrap().pool, dto).await;
         match result {
@@ -76,7 +81,7 @@ impl RssFeedSiteDtoWrite {
 }
 
 pub async fn register_rss_feed_site(
-    pool: SqlitePool,
+    pool: Arc<SqlitePool>,
     rss_feed: RssFeedSiteDtoWrite,
 ) -> Result<(), sqlx::Error> {
     let uid = uuid::Uuid::new_v4();
@@ -94,7 +99,7 @@ pub async fn register_rss_feed_site(
     .bind(rss_feed.links)
     .bind(rss_feed.item_description)
     .bind(rss_feed.language)
-    .execute(&pool)
+    .execute(&*pool)
     .await?;
 
     if row_affected.rows_affected() == 0 {

@@ -41,16 +41,10 @@ pub fn invoke_register_single_feed_link_command<R: RepositoryPort + std::marker:
     let register_single_url_usecase =
         RegisterSingleUrlUseCase::new(http_client_port, register_url_port);
 
-    let registered_link = tauri::async_runtime::block_on(register_single_url_usecase.execute(url));
+    let registered_link: Result<String, anyhow::Error> = tauri::async_runtime::block_on(register_single_url_usecase.execute(url));
 
     match registered_link {
-        Ok(result) => {
-            let registered_link_json = serde_json::from_str(&result);
-            match registered_link_json {
-                Ok(js) => js,
-                Err(_) => todo!(),
-            }
-        }
-        Err(_) => "Failed to register URL!".to_string(),
+        Ok(link) => link,
+        Err(e) => e.to_string(),
     }
 }
