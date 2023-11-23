@@ -23,8 +23,6 @@ impl RepositoryPort for SqliteConnectionContext {
         let database_dir = app_dir.join(DATABASE_DIR);
         let database_file = database_dir.join(DATABASE_FILE);
 
-        println!("Database file: {:?}", database_file);
-
         let is_db_exist = std::fs::metadata(database_dir.clone()).is_ok();
         if !is_db_exist {
             std::fs::create_dir(database_dir).expect("failed to create database directory");

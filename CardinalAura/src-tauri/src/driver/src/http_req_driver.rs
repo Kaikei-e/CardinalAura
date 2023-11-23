@@ -59,7 +59,6 @@ impl HttpClientPort for HttpClientDriver {
             .collect::<Vec<String>>()
             .join("\n");
 
-        println!("{:?}", rss_feed_item.clone());
 
         Ok(RssFeedSite {
             url,
