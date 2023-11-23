@@ -8,6 +8,7 @@ pub trait RepositoryPort {
     fn get_connection(&self) -> Result<DbConnection, Error>;
 }
 
+#[derive(Clone, Debug)]
 pub struct DbConnection {
     pub pool: Arc<Pool<Sqlite>>,
 }

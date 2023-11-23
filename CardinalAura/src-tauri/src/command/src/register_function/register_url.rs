@@ -2,9 +2,8 @@ use domain::rss_feed_site::RssFeedSite;
 use driver::http_req_driver::HttpClientDriver;
 use driver::register_driver::SqliteDriver;
 use driver::sqlite_driver::SqliteConnectionContext;
-use port::http_client::http_client_port::{self, HttpClientPort};
+use port::http_client::http_client_port::HttpClientPort;
 use port::register::register_feed_url_port::RegisterFeedUrlPort;
-use port::repository::repository_port::RepositoryPort;
 use usecase::register_function::register_url_usecase::RegisterSingleUrlUseCase;
 
 #[derive(serde::Serialize)]
@@ -32,20 +31,24 @@ impl RssFeedSiteDto {
     }
 }
 
-// I broke this command
 #[tauri::command]
-pub fn invoke_register_single_feed_link_command(url: String) -> String {
-    let http_client_port: HttpClientDriver = HttpClientPort::new();
-    let register_url_port: SqliteDriver<SqliteConnectionContext> = RegisterFeedUrlPort::new();
+pub fn invoke_register_single_feed_link_command(url: String) -> Result<String, String> {
+    std::thread::spawn(move || {
+        let rt = tokio::runtime::Runtime::new().expect("Failed to create Tokio runtime");
 
-    let register_single_url_usecase =
-        RegisterSingleUrlUseCase::new(http_client_port, register_url_port);
+        rt.block_on(async {
+            let http_client_port: HttpClientDriver = HttpClientPort::new();
+            let register_url_port = SqliteDriver::<SqliteConnectionContext>::new();
 
-    let registered_link: Result<String, anyhow::Error> =
-        tauri::async_runtime::block_on(register_single_url_usecase.execute(url));
+            let register_single_url_usecase =
+                RegisterSingleUrlUseCase::new(http_client_port, register_url_port);
 
-    match registered_link {
-        Ok(link) => link,
-        Err(e) => e.to_string(),
-    }
+            register_single_url_usecase
+                .execute(url)
+                .await
+                .map_err(|e| e.to_string())
+        })
+    })
+    .join()
+    .unwrap_or_else(|_| Err("Failed to execute command".to_string()))
 }
