@@ -59,7 +59,6 @@ impl HttpClientPort for HttpClientDriver {
             .collect::<Vec<String>>()
             .join("\n");
 
-
         Ok(RssFeedSite {
             url,
             title: channel.clone().title,

@@ -1,6 +1,5 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-use driver::sqlite_driver::initialize_connection;
 use tauri::Manager;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -10,6 +9,7 @@ fn greet(name: &str) -> String {
 }
 
 use command::register_function::register_url;
+use driver::sqlite_driver::initialize_connection;
 
 fn main() {
     use tauri::async_runtime::block_on;

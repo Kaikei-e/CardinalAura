@@ -43,10 +43,16 @@ pub fn invoke_register_single_feed_link_command(url: String) -> Result<String, S
             let register_single_url_usecase =
                 RegisterSingleUrlUseCase::new(http_client_port, register_url_port);
 
-            register_single_url_usecase
-                .execute(url)
-                .await
-                .map_err(|e| e.to_string())
+            let result = register_single_url_usecase.execute(url).await;
+
+            match result {
+                Ok(feed) => Ok(feed),
+                Err(e) => {
+                    let error_message = e.to_string();
+                    println!("{}", error_message);
+                    Err("failed to register the feed link".to_string())
+                }
+            }
         })
     })
     .join()
