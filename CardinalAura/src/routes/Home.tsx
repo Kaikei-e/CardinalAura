@@ -2,7 +2,7 @@ import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import { DescriptionModal } from "../components/elements/DescriptionModal";
 import { useState } from "react";
 import { Stream } from "../components/services/Stream";
-import { Register } from "../components/services/Register.1";
+import { Register } from "../components/services/Register";
 
 export const Home = () => {
   const [isStreamModalOpen, setIsStreamModalOpen] = useState(false);
