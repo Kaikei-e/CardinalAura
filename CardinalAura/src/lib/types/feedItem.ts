@@ -1,3 +1,7 @@
+export interface SingleFeedLink {
+  url: string;
+}
+
 export interface FeedItem {
   title: string;
   link: string;

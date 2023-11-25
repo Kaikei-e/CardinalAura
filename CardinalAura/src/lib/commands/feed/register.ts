@@ -1,10 +1,10 @@
 import { invoke } from "@tauri-apps/api/tauri";
 import { z } from "zod";
-import { FeedItem } from "../../types/feedItem";
+import { SingleFeedLink } from "../../types/feedItem";
 
 export const registerSingleFeedLink = async (
   url: string,
-): Promise<FeedItem | undefined> => {
+): Promise<SingleFeedLink | undefined> => {
   const parsedUrl = z.string().url().parse(url);
 
   console.log("Parsed URL: ", parsedUrl);
@@ -20,14 +20,17 @@ export const registerSingleFeedLink = async (
     .then((res) => {
       console.log("Success");
       if (typeof res === "string") {
-        const feedItem: FeedItem = JSON.parse(res);
-        return feedItem;
+        try {
+          const singleFeedLink: SingleFeedLink = {
+            url: res
+          }
+          return singleFeedLink;
+        } catch (error) {
+          console.error("Failed to parse JSON:", res);
+          throw error;
+        }
       } else {
         throw new Error("res is not a string");
       }
     })
-    .catch((err) => {
-      console.log("Error");
-      return err;
-    });
 };

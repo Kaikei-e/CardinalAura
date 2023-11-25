@@ -12,11 +12,13 @@ export const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const isValid = urlValidationSchema.parse(registerURL);
+    e.stopPropagation();
+
+    const isValid = await urlValidationSchema.parse(registerURL);
     if (isValid) {
       const response = await registerSingleFeedLink(registerURL);
       if (response) {
-        alert(response.title);
+        alert(response.url);
       } else if (typeof response === "string") {
         alert(response);
       }
